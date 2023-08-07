@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o+fco2)-=0=892)_=%6(jf7j_be3^vas9w#6mh819^=90e42pv'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,22 +86,13 @@ WSGI_APPLICATION = 'storeConfig.wsgi.application'
 #     }
 # }
 
-# sudo mkdir -p /etc/paths.d &&
-# echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
-
-# CREATE DATABASE store_db;
-# CREATE ROLE atk5549 with password '8vbzq4l9!!!';
-# ALTER ROLE atk5549 WITH LOGIN;
-# GRANT ALL PRIVILEGES ON DATABASE store_db to atk5549
-# ALTER USER atk5549 CREATEDB;
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "store_db",
-        "USER": "atk5549",
-        "PASSWORD": "8vbzq4l9!!!",
-        "HOST": "127.0.0.1",
+        "NAME": os.getenv('POSTGRESQL_NAME_DB'),
+        "USER": os.getenv('POSTGRESQL_LOGIN'),
+        "PASSWORD": os.getenv('POSTGRESQL_PASSWORD'),
+        "HOST": "localhost",
         "PORT": "5432",
     }
 }
@@ -168,6 +162,6 @@ LOGOUT_REDIRECT_URL = '/'
 # порт — 465.
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'shop-helpers@yandex.ru'
-EMAIL_HOST_PASSWORD = 'vqatjibteqiefswz'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
